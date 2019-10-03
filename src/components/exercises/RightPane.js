@@ -1,8 +1,9 @@
 import React from 'react';
 import { Grid, Paper, Typography } from '@material-ui/core'; 
 import Form from '../exercises/Form';
+import { withContext } from '../../context';
 
-export default function RightPane({ 
+function RightPane({ 
   styles, 
   exercise,
   editMode,
@@ -43,3 +44,5 @@ export default function RightPane({
     </Grid>
   );
 }
+
+export default withContext(RightPane)

@@ -2,6 +2,8 @@ import React  from 'react';
 import { Grid, withStyles } from '@material-ui/core'; 
 import RightPane from './RightPane';
 import LeftPane from './LeftPane';
+import { compose } from 'recompose';
+import { withContext } from '../../context';
 
 const styles = theme => ({
   paper: {
@@ -35,14 +37,14 @@ const styles = theme => ({
   }
 })
 
-export default withStyles(styles) (function Exercises ({ 
+function Exercises ({ 
   classes,
-  exercises, 
+  exercisesByMuscles, 
   category, 
   onSelect, 
   exercise, 
   exercise: {
-    id,
+    id = 'welcome',
     title = 'Yo!',
     description = 'Choose whatever you like...'
   },
@@ -57,7 +59,7 @@ export default withStyles(styles) (function Exercises ({
   return (
     <Grid item container className={classes.container} >
       <LeftPane 
-        exercises={exercises} 
+        exercises={exercisesByMuscles}
         styles={classes} 
         category={category} 
         onSelect={onSelect} 
@@ -75,4 +77,6 @@ export default withStyles(styles) (function Exercises ({
       />
     </Grid>
   );
-})
+}
+
+export default compose(withContext, withStyles(styles))(Exercises)

@@ -1,6 +1,8 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, withStyles } from '@material-ui/core';
-import CreateDialog from '../exercises/dialogs/Create';
+import CreateDialog from '../exercises/Create';
+import { compose } from 'recompose';
+import { withContext } from '../../context';
 
 const styles = {
   flex: {
@@ -8,11 +10,8 @@ const styles = {
   }
 }
 
-export default withStyles(styles)(function Header ({ 
+function Header ({ 
   classes,
-  muscles, 
-  onExerciseCreate,
-  exercise,
   setOpen,
   open,
   setEditMode
@@ -23,8 +22,13 @@ export default withStyles(styles)(function Header ({
         <Typography variant="h4" color='inherit' className={classes.flex}>
           Excercise Database
         </Typography>
-        <CreateDialog muscles={muscles} onCreate={onExerciseCreate} setOpen={setOpen} open={open} setEditMode={setEditMode} />
+        <CreateDialog 
+          setOpen={setOpen} 
+          open={open} 
+          setEditMode={setEditMode} />
       </Toolbar>
     </AppBar>
   );
-})
+}
+
+export default compose(withContext, withStyles(styles))(Header)

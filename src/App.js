@@ -3,13 +3,10 @@ import { CssBaseline } from '@material-ui/core';
 import { Header, Footer } from './components/layout';
 import Exercises from './components/exercises';
 import { muscles, exerciseList} from './store/store';
-
-
+import { Provider } from './context';
 import './App.css';
 
-
 function groupBy(objectArray, property) {
-
   const initExercises = muscles.reduce((exercises, category) => ({
     ...exercises,
     [category]: []
@@ -39,7 +36,25 @@ export default function App() {
   const [editMode, setEditMode] = useState(false);
   const [open, setOpen]  = useState(false);
 
-  const test = Object.entries(groupBy(exercises, 'muscles'));
+  const exercisesByMuscles = Object.entries(groupBy(exercises, 'muscles'));
+
+  const getContext = () => ({
+    muscles,
+    onCreate: handleExerciseCreate,
+    onCategorySelect: handleCategorySelect,
+    onDelete: handleExerciseDelete,
+    onSelectEdit: handleExerciseSelectEdit,
+    onEdit: handleExerciseEdit,
+    exercisesByMuscles,
+    onSelect: handleExerciseSelect,
+    open,
+    setOpen,
+    editMode,
+    setEditMode,
+    category,
+    exercises,
+    exercise
+  })
 
   const handleCategorySelect = category => {
     setCategory(category);
@@ -76,34 +91,42 @@ export default function App() {
   }
   
   return (
-    <>
+    <Provider value={getContext()}>
       <CssBaseline />
-      <Header 
-        muscles={muscles}
-        onExerciseCreate={handleExerciseCreate}
-        exercise={exercise}
-        setOpen={setOpen}
-        open={open}
-        setEditMode={setEditMode}
-      />
-      <Exercises
-        exercise={exercise} 
-        exercises={test} 
-        category={category}
-        onSelect={handleExerciseSelect}
-        onDelete={handleExerciseDelete}
-        editMode={editMode}
-        muscles={muscles}
-        onEdit={handleExerciseEdit}
-        onSelectEdit={handleExerciseSelectEdit}
-        setOpen={setOpen}
-        setEditMode={setEditMode}
-      />
-      <Footer 
-        muscles={muscles}
-        onSelect={handleCategorySelect}
-        category={category}
-      />
-    </>
+      <Header />
+      <Exercises />
+      <Footer />
+    </Provider>  
   );
 }
+
+/*
+<Header 
+          exercise={exercise}
+          setOpen={setOpen}
+          open={open}
+          setEditMode={setEditMode}
+        />
+        <Exercises
+          exercise={exercise} 
+          exercises={exercisesByMuscles} 
+          category={category}
+          onSelect={handleExerciseSelect}
+          onDelete={handleExerciseDelete}
+          editMode={editMode}
+          muscles={muscles}
+          onEdit={handleExerciseEdit}
+          onSelectEdit={handleExerciseSelectEdit}
+          setOpen={setOpen}
+          setEditMode={setEditMode}
+        />
+        <Footer 
+          muscles={muscles}
+          onSelect={handleCategorySelect}
+          category={category}
+        />
+
+
+
+
+*/

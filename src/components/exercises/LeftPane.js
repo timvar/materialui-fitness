@@ -10,12 +10,11 @@ import {
   IconButton } from '@material-ui/core'; 
 import { Delete, Edit } from '@material-ui/icons';
 
-export default function LeftPane({ 
+function LeftPane({ 
   styles, 
   exercises, 
   category, 
   onSelect, 
-  exercise, 
   onDelete, 
   onSelectEdit 
 }) {
@@ -62,3 +61,5 @@ export default function LeftPane({
     </Grid>
   );
 }
+
+export default LeftPane

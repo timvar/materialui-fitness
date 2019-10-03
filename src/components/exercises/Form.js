@@ -6,8 +6,9 @@ import {
   InputLabel, 
   Select, 
   MenuItem,} from '@material-ui/core';
+//  import { withContext } from '../../context';
 
-export default function Form ({ 
+function Form ({ 
   muscles, 
   onSubmit, 
   exerciseProp,
@@ -34,12 +35,15 @@ export default function Form ({
   
   useEffect(() => {
     console.log('useEffect');
+    console.log('muscles', muscles );
     setExercise(exerciseProp);
-  }, [exerciseProp]);
+  }, [exerciseProp, muscles]);
 
   const handleChange = name => event => {
     setExercise({ ...exercise, [name]: event.target.value });
     console.log('handlechange', exercise);
+    console.log('muscles', muscles);
+    console.log('categories', categories);
   }
 
   const handleSubmit = () => {
@@ -52,10 +56,9 @@ export default function Form ({
   }
 
   const {title, description} = exercise;
-  const {muscles: categories} = { muscles}
+  const {muscles: categories} = {muscles} ;
 
   return (
-    
     <form>
       <TextField
         label="Title"
@@ -105,3 +108,20 @@ export default function Form ({
      </form>
   );
 }
+
+export default Form
+//export default withContext(Form)
+
+/*
+
+        <Select
+          value={exercise.muscles}
+          onChange={handleChange('muscles')}
+        >
+          {categories.map(category => 
+            <MenuItem key={category} value={category}>
+              {category}
+            </MenuItem>
+          )}
+        </Select>
+*/
